@@ -219,34 +219,61 @@ int printableChar(char c);
 #define GPIO6_BASE				0x49058000
 
 /* GPIO Offsets */
-#define GPIO_REVISION			0x0
-#define GPIO_SYSCONFIG			0x10
-#define GPIO_SYSSTATUS			0x14
-#define GPIO_IRQSTATUS1			0x18
-#define GPIO_IRQ_ENABLE1		0x1C
-#define GPIO_WAKEUPENABLE		0x20
-#define GPIO_IRQSTATUS2			0x28
-#define GPIO_IRQENABLE2			0x2C
-#define GPIO_CTRL				0x30
-#define GPIO_OE					0x34
-#define GPIO_DATAIN				0x38
-#define GPIO_DATAOUT			0x3C
-#define GPIO_LEVELDETECT0		0x40
-#define GPIO_LEVELDETECT1		0x44
-#define GPIO_RISINGDETECT		0x48
-#define GPIO_FALLINGDETECT		0x4C
-#define GPIO_DEBOUNCENABLE		0x50
-#define GPIO_DEBOUNCEINGTIME	0x54
-#define GPIO_CLEARIRQENABLE1	0x60
-#define GPIO_SETIRQENABLE1		0x64
-#define GPIO_CLEARIRQENABLE2	0x70
-#define GPIO_SETIRQENABLE2		0x74
-#define GPIO_CLEARWKUENA		0x80
-#define GPIO_SETWKUENA			0x84
-#define GPIO_CLEARDATAOUT		0x90
-#define GPIO_SETDATAOUT			0x94
 
+/* Offsets for OMAP3530
+ * New offsets below
+ *
+ * #define GPIO_REVISION			0x0
+ * #define GPIO_SYSCONFIG			0x10
+ * #define GPIO_SYSSTATUS			0x14
+ * #define GPIO_IRQSTATUS1			0x18
+ * #define GPIO_IRQ_ENABLE1		    0x1C
+ * #define GPIO_WAKEUPENABLE		0x20
+ * #define GPIO_IRQSTATUS2			0x28
+ * #define GPIO_IRQENABLE2			0x2C
+ * #define GPIO_CTRL				0x30
+ * #define GPIO_OE					0x34
+ * #define GPIO_DATAIN				0x38
+ * #define GPIO_DATAOUT			    0x3C
+ * #define GPIO_LEVELDETECT0		0x40
+ * #define GPIO_LEVELDETECT1		0x44
+ * #define GPIO_RISINGDETECT		0x48
+ * #define GPIO_FALLINGDETECT		0x4C
+ * #define GPIO_DEBOUNCENABLE		0x50
+ * #define GPIO_DEBOUNCEINGTIME	    0x54
+ * #define GPIO_CLEARIRQENABLE1	    0x60
+ * #define GPIO_SETIRQENABLE1		0x64
+ * #define GPIO_CLEARIRQENABLE2	    0x70
+ * #define GPIO_SETIRQENABLE2		0x74
+ * #define GPIO_CLEARWKUENA		    0x80
+ * #define GPIO_SETWKUENA			0x84
+ * #define GPIO_CLEARDATAOUT		0x90
+ * #define GPIO_SETDATAOUT			0x94
+ */
 
+#define GPIO_REVISION           0x0
+#define GPIO_SYSCONFIG          0x10
+#define GPIO_IRQSTATUS_RAW_0    0x24
+#define GPIO_IRQSTATUS_RAW_1    0x28
+#define GPIO_IRQSTATUS_0        0x2C
+#define GPIO_IRQSTATUS_1        0x30
+#define GPIO_IRQSTATUS_SET_0    0x34
+#define GPIO_IRQSTATUS_SET_1    0x38
+#define GPIO_IRQSTATUS_CLR_0    0x3C
+#define GPIO_IRQSTATUS_CLR_1    0x40
+#define GPIO_SYSSTATUS          0x114
+#define GPIO_CTRL               0x130
+#define GPIO_OE                 0x134
+#define GPIO_DATAIN             0x138
+#define GPIO_DATAOUT            0x13C
+#define GPIO_LEVELDETECT0       0x140
+#define GPIO_LEVELDETECT1       0x144
+#define GPIO_RISINGDETECT       0x148
+#define GPIO_FALLINGDETECT      0x14C
+#define GPIO_DEBOUNCENABLE      0x150
+#define GPIO_DEBOUNCINGTIME     0x154
+#define GPIO_CLEARDATAOUT       0x190
+#define GPIO_SETDATAOUT         0x194
 
 /* Pin definitions */
 #define PIN0					(0x1 << 0)
