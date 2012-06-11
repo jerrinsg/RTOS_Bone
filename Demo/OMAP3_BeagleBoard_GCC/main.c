@@ -175,18 +175,20 @@ static void vMemCheckTask( void *pvParameters );
 int main( void )
 {
 	/* Setup the hardware for use with the Beableboard. */
-	prvSetupHardware();
+	// prvSetupHardware();
 
-	vStartLEDFlashTasks (mainLED_TASK_PRIORITY);
-	vAltStartComTestTasks( mainCOM_TEST_PRIORITY, mainCOM_TEST_BAUD_RATE, mainCOM_TEST_LED );
-	vStartIntegerMathTasks ( tskIDLE_PRIORITY );
-	vStartPolledQueueTasks ( mainQUEUE_POLL_PRIORITY );
-	vStartMathTasks ( tskIDLE_PRIORITY );
-	vStartSemaphoreTasks( mainSEM_TEST_PRIORITY );
-	vStartDynamicPriorityTasks();
-	vStartBlockingQueueTasks( mainBLOCK_Q_PRIORITY );
+	// vStartLEDFlashTasks (mainLED_TASK_PRIORITY);
+	// vAltStartComTestTasks( mainCOM_TEST_PRIORITY, mainCOM_TEST_BAUD_RATE, mainCOM_TEST_LED );
+	// vStartIntegerMathTasks ( tskIDLE_PRIORITY );
+	// vStartPolledQueueTasks ( mainQUEUE_POLL_PRIORITY );
+	// vStartMathTasks ( tskIDLE_PRIORITY );
+	// vStartSemaphoreTasks( mainSEM_TEST_PRIORITY );
+	// vStartDynamicPriorityTasks();
+	// vStartBlockingQueueTasks( mainBLOCK_Q_PRIORITY );
+    //
 	/* start the check task - which is defined in this file!. */
-	xTaskCreate( vErrorChecks, ( signed char *) "Check", configMINIMAL_STACK_SIZE, NULL, mainCHECK_TASK_PRIORITY, NULL );
+
+	// xTaskCreate( vErrorChecks, ( signed char *) "Check", configMINIMAL_STACK_SIZE, NULL, mainCHECK_TASK_PRIORITY, NULL );
 
 	/* Now all the tasks have been stared - start the scheduler.
 	 * NOTE : Tasks run in system mode and the scheduler runs in Supervisor mode.
@@ -194,27 +196,68 @@ int main( void )
 	 * The demo applications included in the the FreeRTOS.og download swith to supervisor
 	 * mode prior to main being called. If you are not using one of these demo application
 	 * projects then ensure Supervisor mode is used here */
+
 	/* Should never reach here! */
-	vTaskStartScheduler();
+	// vTaskStartScheduler();
+    
+    // Writting a small test function which toggles LEDs
+    
+    volatile unsigned long ul;  /* volatile so it is not optimized away. */
+    
+    /* Initialise the LED outputs */
+	prvSetupHardware();
+
+    /* Toggle the LEDs repeatedly. */
+    for( ;; )
+    {
+        /* We don't want to use the RTOS features yet, so just use a very 
+         * crude delay mechanism instead. */
+        for( ul = 0; ul < 0xfffff; ul++ )
+        {
+        }
+
+        /* Toggle the first four LEDs (on the assumption there are at least 
+         * 4 fitted. */
+        vParTestToggleLED( 0 );
+        vParTestToggleLED( 1 );
+//        vParTestToggleLED( 2 );
+//        vParTestToggleLED( 3 );
+    }
+
 	return 0;
 }
+
 /*-----------------------------------------------------------*/
 
 static void prvSetupHardware( void )
 {
 
 	/* Initialize GPIOs */
-	/* GPIO5: 31,30,29,28,22,21,15,14,13,12
-	 * GPIO6: 23,10,08,02,01 */
-	(*(REG32(GPIO5_BASE+GPIO_OE))) = ~(PIN31|PIN30|PIN29|PIN28|PIN22|PIN21|PIN15|PIN14|PIN13|PIN12);
-	(*(REG32(GPIO6_BASE+GPIO_OE))) = ~(PIN23|PIN10|PIN8|PIN2|PIN1);
 
-	/* Switch off the leds */
-	(*(REG32(GPIO5_BASE+GPIO_CLEARDATAOUT))) = PIN22|PIN21;
-}
+    /*---------------------------------------------------------
+     * BOARD 
+	 * GPIO5: 31,30,29,28,22,21,15,14,13,12
+	 * GPIO6: 23,10,08,02,01 
+	 * (*(REG32(GPIO5_BASE+GPIO_OE))) = ~(PIN31|PIN30|PIN29|PIN28|PIN22|PIN21|PIN15|PIN14|PIN13|PIN12);
+	 * (*(REG32(GPIO6_BASE+GPIO_OE))) = ~(PIN23|PIN10|PIN8|PIN2|PIN1);
+     *
+	 * Switch off the leds 
+	 * (*(REG32(GPIO5_BASE+GPIO_CLEARDATAOUT))) = PIN22|PIN21;
+     *---------------------------------------------------------*/
+
+    /* BONE */
+
+    // How exactly to use these ?
+    /* THese WER TAKEN FROM WAYLING */
+    (*(REG32(PRCM_REG + CM_PER_GPIO1_CLKCTRL))) =0x2;
+    (*(REG32(GPIO1_BASE+GPIO_OE))) = ~(PIN21|PIN22);  
+ 
+    /* Switch off the leds */  
+    (*(REG32(GPIO1_BASE+GPIO_CLEARDATAOUT))) = PIN22|PIN21; 
+} 
 
 
-/*---------------------------------------------------------*/
+/*-----------------------------------------------------------*/
 
 static void vErrorChecks( void *pvParameters )
 {
@@ -267,15 +310,19 @@ void prvToggleOnBoardLED( void )
 	/* Toggle LED0 */
 	unsigned long ulState;
 	unsigned volatile int * gpio;
-	ulState = (*(REG32 (GPIO5_BASE + GPIO_DATAIN)));
+	//ulState = (*(REG32 (GPIO5_BASE + GPIO_DATAIN)));
+    ulState = (*(REG32 (GPIO1_BASE + GPIO_DATAIN)));
+
 	if( ulState & mainON_BOARD_LED_BIT )
 	{
-		gpio = (unsigned int *)(GPIO5_BASE + GPIO_SETDATAOUT);
+		//gpio = (unsigned int *)(GPIO5_BASE + GPIO_SETDATAOUT);
+		gpio = (unsigned int *)(GPIO1_BASE + GPIO_SETDATAOUT);
+
 		*gpio = mainON_BOARD_LED_BIT;
 	}
 	else
 	{
-		gpio = (unsigned int *)(GPIO5_BASE + GPIO_CLEARDATAOUT);
+		gpio = (unsigned int *)(GPIO1_BASE + GPIO_CLEARDATAOUT);
 		*gpio = mainON_BOARD_LED_BIT;
 	}
 }

@@ -65,19 +65,19 @@
 /* Beagle board has 2 leds attched on a GPIO but I will
  * use one of them. The other one will be used for the serial I/O
  */
-#define partstNUM_LEDS			( 1 )
+#define partstNUM_LEDS			( 4 )
 #define partstALL_OUTPUTS_OFF	( ( unsigned long ) 0xffffffff )
 
 /*-----------------------------------------------------------
  * Simple parallel port IO routines.
  *-----------------------------------------------------------*/
 
+
 void vParTestSetLED( unsigned portBASE_TYPE uxLED, signed portBASE_TYPE xValue )
 {
 	unsigned int GPIO_PIN = 0;
 	if( uxLED <= partstNUM_LEDS){
-		/* I define LED0 (GPIO_149) as 0
-		 * and 	LED1 (GPIO_150) as 1 */
+    /* I define LED0 (GPIO_149) as 0  and LED1 (GPIO_150) as 1 */
 		switch(uxLED){
 			case 0: 
 				{
@@ -92,15 +92,21 @@ void vParTestSetLED( unsigned portBASE_TYPE uxLED, signed portBASE_TYPE xValue )
 			default: break;
 		};
 		if ( xValue )
-			(*(REG32(GPIO5_BASE + GPIO_SETDATAOUT))) = GPIO_PIN;
+			//(*(REG32(GPIO5_BASE + GPIO_SETDATAOUT))) = GPIO_PIN;
+            (*(REG32(GPIO1_BASE + GPIO_SETDATAOUT))) = GPIO_PIN;
+
 		else
-			(*(REG32(GPIO5_BASE + GPIO_CLEARDATAOUT))) = GPIO_PIN;
+			//(*(REG32(GPIO5_BASE + GPIO_CLEARDATAOUT))) = GPIO_PIN;
+            (*(REG32(GPIO1_BASE + GPIO_CLEARDATAOUT))) = GPIO_PIN;
+
+
 	}
 }
 
 /* This function is called by Common/Minimal/flash.c (Led Task)
  * The Led Task spawns 3 tasks, each tasks handling a separate led.
  * TI Beagleboard, has only 2 leds, so the 3rd task should do nothing
+ * TI BeagleBone has 4 leds
  */
 
 void vParTestToggleLED( unsigned portBASE_TYPE uxLED )
@@ -109,8 +115,12 @@ void vParTestToggleLED( unsigned portBASE_TYPE uxLED )
 	if( uxLED <= partstNUM_LEDS )
 	{
 		/* Toggle LED Status
-		 * LED0 = GPIO_149
-		 * LED1 = GPIO_150 */
+		 * LED0 = GPIO1_21
+		 * LED1 = GPIO1_22
+         * LED2 = GPIO1_23
+         * LED3 = GPIO_24
+         */
+
 		switch(uxLED){
 			case 0: 
 				{
@@ -122,6 +132,15 @@ void vParTestToggleLED( unsigned portBASE_TYPE uxLED )
 					GPIO_PIN=PIN22;
 					break;
 				}
+            case 2:
+                {
+                    GPIO_PIN=PIN23;
+                }
+            case 3:
+                {
+                    GPIO_PIN=PIN24;
+
+                }
 			default: 
 				{
 					// Don't do nothing
@@ -130,12 +149,13 @@ void vParTestToggleLED( unsigned portBASE_TYPE uxLED )
 		};
 	}
 
-	ulCurrentState = (*(REG32 (GPIO5_BASE + GPIO_DATAOUT)));
+	//ulCurrentState = (*(REG32 (GPIO5_BASE + GPIO_DATAOUT)));
+    ulCurrentState = (*(REG32 (GPIO1_BASE + GPIO_DATAOUT)));
 		
 	/* I have to ignore the rest of the bits */
 	if ( ulCurrentState & GPIO_PIN )
-		(*(REG32(GPIO5_BASE + GPIO_CLEARDATAOUT))) |= GPIO_PIN;
+		(*(REG32(GPIO1_BASE + GPIO_CLEARDATAOUT))) |= GPIO_PIN;
 	else
-		(*(REG32(GPIO5_BASE + GPIO_SETDATAOUT))) |= GPIO_PIN;
+		(*(REG32(GPIO1_BASE + GPIO_SETDATAOUT))) |= GPIO_PIN;
 	
 }

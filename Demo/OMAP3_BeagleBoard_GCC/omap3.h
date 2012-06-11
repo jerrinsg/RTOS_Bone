@@ -215,8 +215,17 @@ int printableChar(char c);
 
 /* GPIO */
 
-#define GPIO5_BASE				0x49056000
-#define GPIO6_BASE				0x49058000
+/* GPIO Base address for BeagleBoard
+ * #define GPIO5_BASE				0x49056000
+ * #define GPIO6_BASE				0x49058000
+ */
+
+/* GPIO Base address for BeagleBone AM335x */
+
+#define GPIO0_BASE              0x44E07000
+#define GPIO1_BASE              0x4804C000
+#define GPIO2_BASE              0x481AC000
+#define GPIO3_BASE              0x481AE000
 
 /* GPIO Offsets */
 
@@ -354,5 +363,9 @@ int printableChar(char c);
 #define WER_REG					0x05C
 #define CFPS_REG				0x060
 
-
+/* These lines were taken from WAYLING
+ * Refer them later
+ */
+#define PRCM_REG                0x44e00000
+#define CM_PER_GPIO1_CLKCTRL    0xAC
 #endif /* omap3_h */
