@@ -89,6 +89,17 @@ void vParTestSetLED( unsigned portBASE_TYPE uxLED, signed portBASE_TYPE xValue )
 					GPIO_PIN=PIN22;
 					break;
 				}
+            case 2: 
+				{
+					GPIO_PIN=PIN23;
+					break;
+				}
+            case 3: 
+				{
+					GPIO_PIN=PIN24;
+					break;
+				}
+
 			default: break;
 		};
 		if ( xValue )
@@ -98,7 +109,6 @@ void vParTestSetLED( unsigned portBASE_TYPE uxLED, signed portBASE_TYPE xValue )
 		else
 			//(*(REG32(GPIO5_BASE + GPIO_CLEARDATAOUT))) = GPIO_PIN;
             (*(REG32(GPIO1_BASE + GPIO_CLEARDATAOUT))) = GPIO_PIN;
-
 
 	}
 }

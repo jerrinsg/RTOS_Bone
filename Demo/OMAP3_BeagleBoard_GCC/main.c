@@ -219,8 +219,8 @@ int main( void )
         /* Toggle the first four LEDs (on the assumption there are at least 
          * 4 fitted. */
         vParTestToggleLED( 0 );
-        vParTestToggleLED( 1 );
-//        vParTestToggleLED( 2 );
+//        vParTestToggleLED( 1 );
+        vParTestToggleLED( 2 );
 //        vParTestToggleLED( 3 );
     }
 
@@ -250,10 +250,11 @@ static void prvSetupHardware( void )
     // How exactly to use these ?
     /* THese WER TAKEN FROM WAYLING */
     (*(REG32(PRCM_REG + CM_PER_GPIO1_CLKCTRL))) =0x2;
-    (*(REG32(GPIO1_BASE+GPIO_OE))) = ~(PIN21|PIN22);  
+    (*(REG32(GPIO1_BASE+GPIO_OE))) = ~(PIN21|PIN22|PIN23|PIN24);  
  
     /* Switch off the leds */  
-    (*(REG32(GPIO1_BASE+GPIO_CLEARDATAOUT))) = PIN22|PIN21; 
+	// (*(REG32(GPIO6_BASE+GPIO_OE))) = ~(PIN23|PIN10|PIN8|PIN2|PIN1);
+    (*(REG32(GPIO1_BASE+GPIO_CLEARDATAOUT))) = PIN24|PIN23|PIN22|PIN21; 
 } 
 
 
