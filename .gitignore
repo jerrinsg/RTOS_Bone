@@ -40,4 +40,7 @@ Thumbs.db
 # User Misc #
 ######################
 cscope.*
+*.c~
+*.txt~
+*.h~
 *~
