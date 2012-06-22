@@ -1,7 +1,7 @@
-#ifndef omap3_h
-#define omap3_h
+#ifndef am335_h
+#define am335_h
 /*******************************************************************************
-omap3h - Register definitions for TI BeagleBoard C4
+am335h - Register definitions for TI BeagleBone Rev A4
            
 THE SOFTWARE IS DELIVERED "AS IS" WITHOUT WARRANTY OR CONDITION OF ANY KIND, 
 EITHER EXPRESS, IMPLIED OR STATUTORY. THIS INCLUDES WITHOUT LIMITATION ANY 
@@ -15,6 +15,7 @@ including being redistributed with any tools.
 If you find a problem with the file, please report it so that it can be fixed.
 
 Created by Markos Chandras <chandram@cs.man.ac.uk>
+Edited by Jerrin Shaji George <jerrinsg@gmail.com>
 
 *******************************************************************************/
 
@@ -42,21 +43,22 @@ void serial_putbyte(unsigned char nr);
 int printableChar(char c);
 
 /* Default RAM Exception handlers */
-#define E_UNDEFINED				(*(REG32 (0x4020FFE4)))
-#define E_SWI					(*(REG32 (0x4020FFE8)))
-#define E_PREFETCH				(*(REG32 (0x4020FFEC)))
-#define E_DATA_ABRT				(*(REG32 (0x4020FFF0)))
-#define E_UNUSED				(*(REG32 (0x4020FFF4)))
-#define E_IRQ					(*(REG32 (0x4020FFF8)))
-#define E_FIQ					(*(REG32 (0x4020FFFC)))
-
+/* Changed for bone */
+#define E_UNDEFINED				(*(REG32 (0x4030CE24)))
+#define E_SWI					(*(REG32 (0x4030CE28)))
+#define E_PREFETCH				(*(REG32 (0x4030CE2C)))
+#define E_DATA_ABRT				(*(REG32 (0x4030CE30)))
+#define E_UNUSED				(*(REG32 (0x4030CE34)))
+#define E_IRQ					(*(REG32 (0x4030CE38)))
+#define E_FIQ					(*(REG32 (0x4030CE3C)))
 
 /* GPTIMER REGISTERS */
-#define GPTI1					0x48318000
-#define GPTI2					0x49032000
+/* Changing to DMTIMER */
+#define DMTIMER0                0x44E05000
+// #define GPTI1				0x48318000
+// #define GPTI2				0x49032000
 
 /* Timer Offsets */
-#define GPTI_TIDR				0x0
 #define GPTI_TIOCP_CFG 			0x10
 #define GPTI_TISTAT				0x14
 #define GPTI_TISR				0x18
@@ -76,6 +78,27 @@ int printableChar(char c);
 #define GPTI_TCVR				0x50
 #define GPTI_TOCR				0x54
 #define GPTI_TOWR				0x58
+
+
+#define DMTIMER_TIDR            0x00
+#define DMTIMER_TIOCP_CFG       0x10
+#define DMTIMER_IRQSTATUS_RAW   0x24
+#define DMTIMER_IRQSTATUS       0x28
+#define DMTIMER_IRQENABLE_SET   0x2C
+#define DMTIMER_IRQENABLE_CLR   0x30
+#define DMTIMER_IRQWAKEEN       0x34
+#define DMTIMER_TCLR            0x38
+#define DMTIMER_TCRR            0x3C
+#define DMTIMER_TLDR            0x40
+#define DMTIMER_TTGR            0x44
+#define DMTIMER_TWPS            0x48
+#define DMTIMER_TMAR            0x4C
+#define DMTIMER_TCAR1           0x50
+#define DMTIMER_TSICR           0x54
+#define DMTIMER_TCAR2           0x58
+
+
+
 
 /* Define MPU_INTC */
 #define MPU_INTC				0x48200000
@@ -214,52 +237,14 @@ int printableChar(char c);
 #define INTCPS_ILSR95			0x27C
 
 /* GPIO */
-
-/* GPIO Base address for BeagleBoard
- * #define GPIO5_BASE				0x49056000
- * #define GPIO6_BASE				0x49058000
- */
-
-/* GPIO Base address for BeagleBone AM335x */
-
+/* Changed for Bone */
 #define GPIO0_BASE              0x44E07000
 #define GPIO1_BASE              0x4804C000
 #define GPIO2_BASE              0x481AC000
 #define GPIO3_BASE              0x481AE000
 
 /* GPIO Offsets */
-
-/* Offsets for OMAP3530
- * New offsets below
- *
- * #define GPIO_REVISION			0x0
- * #define GPIO_SYSCONFIG			0x10
- * #define GPIO_SYSSTATUS			0x14
- * #define GPIO_IRQSTATUS1			0x18
- * #define GPIO_IRQ_ENABLE1		    0x1C
- * #define GPIO_WAKEUPENABLE		0x20
- * #define GPIO_IRQSTATUS2			0x28
- * #define GPIO_IRQENABLE2			0x2C
- * #define GPIO_CTRL				0x30
- * #define GPIO_OE					0x34
- * #define GPIO_DATAIN				0x38
- * #define GPIO_DATAOUT			    0x3C
- * #define GPIO_LEVELDETECT0		0x40
- * #define GPIO_LEVELDETECT1		0x44
- * #define GPIO_RISINGDETECT		0x48
- * #define GPIO_FALLINGDETECT		0x4C
- * #define GPIO_DEBOUNCENABLE		0x50
- * #define GPIO_DEBOUNCEINGTIME	    0x54
- * #define GPIO_CLEARIRQENABLE1	    0x60
- * #define GPIO_SETIRQENABLE1		0x64
- * #define GPIO_CLEARIRQENABLE2	    0x70
- * #define GPIO_SETIRQENABLE2		0x74
- * #define GPIO_CLEARWKUENA		    0x80
- * #define GPIO_SETWKUENA			0x84
- * #define GPIO_CLEARDATAOUT		0x90
- * #define GPIO_SETDATAOUT			0x94
- */
-
+/* Changed for Bone */
 #define GPIO_REVISION           0x0
 #define GPIO_SYSCONFIG          0x10
 #define GPIO_IRQSTATUS_RAW_0    0x24
@@ -283,6 +268,8 @@ int printableChar(char c);
 #define GPIO_DEBOUNCINGTIME     0x154
 #define GPIO_CLEARDATAOUT       0x190
 #define GPIO_SETDATAOUT         0x194
+/* GPIO Changes End */
+
 
 /* Pin definitions */
 #define PIN0					(0x1 << 0)
@@ -363,9 +350,6 @@ int printableChar(char c);
 #define WER_REG					0x05C
 #define CFPS_REG				0x060
 
-/* These lines were taken from WAYLING
- * Refer them later
- */
 #define PRCM_REG                0x44e00000
 #define CM_PER_GPIO1_CLKCTRL    0xAC
 #endif /* omap3_h */

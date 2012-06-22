@@ -236,14 +236,20 @@ static void prvSetupTimerInterrupt( void )
 	 * bit 6=1 -> compare mode
 	 * The source is 32Khz
 	 * */
-	(*(REG32(GPTI1 + GPTI_TIOCP_CFG))) = 0x2; // reset interface
-	(*(REG32(GPTI1 + GPTI_TLDR))) = 0; // initialize the load register
-	(*(REG32(GPTI1 + GPTI_TCRR))) = 0; // initialize counter
-	(*(REG32(GPTI1 + GPTI_TMAR))) = ulCompareMatch; // load match value
 	
+    //(*(REG32(GPTI1 + GPTI_TIOCP_CFG))) = 0x2; // reset interface
+    (*(REG32(DMTIMER0 + DMTIMER_TIOCP_CFG))) = 0x2; // reset interface
+
+	//(*(REG32(GPTI1 + GPTI_TCRR))) = 0; // initialize counter
+    (*(REG32(DMTIMER0 + DMTIMER_TCRR))) = 0; // initialize counter
+
+	//(*(REG32(GPTI1 + GPTI_TMAR))) = ulCompareMatch; // load match value
+	(*(REG32(DMTIMER0 + DMTIMER_TMAR))) = ulCompareMatch; // load match value
+
 	/* Clear pending matching interrupt (if any) */
-	(*(REG32(GPTI1 + GPTI_TISR))) = 0x1;
-	
+	//(*(REG32(GPTI1 + GPTI_TISR))) = 0x1;
+	(*(REG32(DMTIMER0 + GPTI_TISR))) = 0x1;
+
 	/* Enable matching interrupts */
 	(*(REG32(GPTI1 + GPTI_TIER))) = 0x1;
 

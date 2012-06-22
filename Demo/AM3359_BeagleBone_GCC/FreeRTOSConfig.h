@@ -54,7 +54,7 @@
 #ifndef FREERTOS_CONFIG_H
 #define FREERTOS_CONFIG_H
 
-#include <omap3.h>
+#include <am335.h>
 
 
 /*-----------------------------------------------------------
@@ -73,7 +73,10 @@
 #define configUSE_IDLE_HOOK		0
 #define configUSE_TICK_HOOK		0
 
-#define configCPU_CLOCK_HZ		( ( unsigned long ) 8000000 )
+//#define configCPU_CLOCK_HZ		( ( unsigned long ) 8000000 )
+#define configCPU_CLOCK_HZ		( ( unsigned long ) 5000000 )
+// AM3359 runs at 500MHZ on USB Power Mode
+
 #define configTICK_RATE_HZ		( ( portTickType ) 1000 ) 
 #define configMAX_PRIORITIES		( ( unsigned portBASE_TYPE ) 5 )
 #define configMINIMAL_STACK_SIZE	( ( unsigned short ) 128 )
