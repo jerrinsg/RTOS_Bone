@@ -208,12 +208,12 @@ static void prvSetupTimerInterrupt( void )
 	extern void ( vPortYieldProcessor ) ( void );
 
 	/* Reset Interrupt Controller */
-	(*(REG32(MPU_INTC + INTCPS_SYSCONFIG))) = 0x00000002;
-	(*(REG32(MPU_INTC + INTCPS_IDLE))) = 0x00000001;
+	(*(REG32(MPU_INTC + INTC_SYSCONFIG))) = 0x00000002;
+	(*(REG32(MPU_INTC + INTC_IDLE))) = 0x00000001;
 
 	/* Enable Interrupt 37 which is used for GPTIMER 1 and interrupt 74 for UART3*/
-	(*(REG32(MPU_INTC + INTCPS_MIR_CLEAR1))) = ~(*(REG32(MPU_INTC + INTCPS_MIR1)))|0x20;
-	(*(REG32(MPU_INTC + INTCPS_MIR_CLEAR2))) = ~(*(REG32(MPU_INTC + INTCPS_MIR2)))|0x400;
+	(*(REG32(MPU_INTC + INTC_MIR_CLEAR1))) = ~(*(REG32(MPU_INTC + INTC_MIR1)))|0x20;
+	(*(REG32(MPU_INTC + INTC_MIR_CLEAR2))) = ~(*(REG32(MPU_INTC + INTC_MIR2)))|0x400;
 	
 	/* Calculate the match value required for our wanted tick rate */
 	ulCompareMatch = configCPU_CLOCK_HZ / configTICK_RATE_HZ;

@@ -175,7 +175,7 @@ static void vMemCheckTask( void *pvParameters );
 int main( void )
 {
 	/* Setup the hardware for use with the Beableboard. */
-	prvSetupHardware();
+    //	prvSetupHardware();
 
 	// vStartLEDFlashTasks (mainLED_TASK_PRIORITY);
 	// vAltStartComTestTasks( mainCOM_TEST_PRIORITY, mainCOM_TEST_BAUD_RATE, mainCOM_TEST_LED );
@@ -206,27 +206,27 @@ int main( void )
     //------------------------LED TOGGLE--------------------------------------
     // Writting a small test function which toggles LEDs
     
-    // volatile unsigned long ul;  /* volatile so it is not optimized away. */
+    volatile unsigned long ul;  /* volatile so it is not optimized away. */
     
     /* Initialise the LED outputs */
-	// prvSetupHardware();
+	prvSetupHardware();
 
     /* Toggle the LEDs repeatedly. */
-    // for( ;; )
-    // {
+    for( ;; )
+    {
     //     /* We don't want to use the RTOS features yet, so just use a very 
     //      * crude delay mechanism instead. */
-    //     for( ul = 0; ul < 0xfffff; ul++ )
-    //     {
-    //     }
+        for( ul = 0; ul < 0xfffff; ul++ )
+        {
+        }
 
     //     /* Toggle the first four LEDs (on the assumption there are at least 
     //      */
-    //     vParTestToggleLED( 0 );
+        vParTestToggleLED( 0 );
     //     // vParTestToggleLED( 1 );
-    //     vParTestToggleLED( 2 );
+        vParTestToggleLED( 2 );
     //     // vParTestToggleLED( 3 );
-    // }
+    }
     // //--------------------LED TOGGLE------------------------------------
     
 

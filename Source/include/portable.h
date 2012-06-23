@@ -236,8 +236,8 @@
 	#include "..\..\Source\portable\Softune\MB96340\portmacro.h"
 #endif
 
-#ifdef GCC_OMAP3_BeagleBoard
-	#include "../../Source/portable/GCC/OMAP3_BeagleBoard/portmacro.h"
+#ifdef GCC_AM335_BeagleBoard
+	#include "../../Source/portable/GCC/AM335_BeagleBone/portmacro.h"
 #endif
 
 #ifdef BCC_INDUSTRIAL_PC_PORT

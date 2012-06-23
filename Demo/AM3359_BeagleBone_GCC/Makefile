@@ -72,7 +72,7 @@ WARNINGS=-Wall -Wextra -Wshadow -Wpointer-arith -Wbad-function-cast -Wcast-align
 #
 # CFLAGS common to both the THUMB and ARM mode builds
 
-CFLAGS=$(WARNINGS) -D DEBUG -D $(RUN_MODE) -D GCC_OMAP3_BeagleBoard -I. -I../../Source/include \
+CFLAGS=$(WARNINGS) -D DEBUG -D $(RUN_MODE) -D GCC_AM335_BeagleBoard -I. -I../../Source/include \
 		-I../Common/include $(DEBUG) -mcpu=cortex-a8 -T$(LDSCRIPT) -Ttext $(TEXT_BASE) \
 	 $(OPTIM) -fomit-frame-pointer -fno-strict-aliasing
 
@@ -104,12 +104,12 @@ $(RTOS_SOURCE_DIR)/tasks.c \
 $(RTOS_SOURCE_DIR)/queue.c \
 $(RTOS_SOURCE_DIR)/list.c \
 $(RTOS_SOURCE_DIR)/portable/MemMang/heap_2.c \
-$(RTOS_SOURCE_DIR)/portable/GCC/OMAP3_BeagleBoard/port.c
+$(RTOS_SOURCE_DIR)/portable/GCC/AM335_BeagleBone/port.c
 
 #
 # Source files that must be built to ARM mode.
 #
-ARM_SRC = $(RTOS_SOURCE_DIR)/portable/GCC/OMAP3_BeagleBoard/portISR.c \
+ARM_SRC = $(RTOS_SOURCE_DIR)/portable/GCC/AM335_BeagleBone/portISR.c \
 serial_unsupported/serialISR.c
 
 #

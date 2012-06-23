@@ -192,7 +192,7 @@ void vUART_ISR_Handler( void )
 
 	/* Clear UART interrupt */
 
-	*(REG32(MPU_INTC + INTCPS_CONTROL)) = 0x1;
+	*(REG32(MPU_INTC + INTC_CONTROL)) = 0x1;
 
 	__asm volatile("pop {lr}	\n\t");
 

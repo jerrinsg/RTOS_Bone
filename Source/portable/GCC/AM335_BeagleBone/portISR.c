@@ -96,11 +96,11 @@ void vIRQHandler ( void ){
 	portSAVE_CONTEXT();	
 
 	/* If this is IRQ_38 then jump to vTickISR */
-	if((*(REG32(MPU_INTC + INTCPS_SIR_IRQ))) == 37)
+	if((*(REG32(MPU_INTC + INTC_SIR_IRQ))) == 37)
 	{
 		__asm volatile ("bl vTickISR");
 	}
-	else if((*(REG32(MPU_INTC + INTCPS_SIR_IRQ)))==74)
+	else if((*(REG32(MPU_INTC + INTC_SIR_IRQ)))==74)
 	{
 		__asm volatile ("bl vUART_ISR_Handler");
 	}
@@ -166,7 +166,7 @@ void vTickISR( void )
 
 	(*(REG32(GPTI1 + GPTI_TISR))) = 0x1;  // clear Match interrupt
 	(*(REG32(GPTI1 + GPTI_TTGR))) = 0xFF; // reset timer 
- 	(*(REG32(MPU_INTC + INTCPS_CONTROL))) = 0x1;
+ 	(*(REG32(MPU_INTC + INTC_CONTROL))) = 0x1;
 
 	__asm volatile("pop {lr}	\n\t");
 
