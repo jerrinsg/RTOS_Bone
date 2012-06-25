@@ -1,0 +1,1 @@
+uenvcmd=mmc rescan;fatload mmc 0 0x80300000 rtosdemo-a.bin;go 0x80300000
