@@ -74,7 +74,8 @@
 #define configUSE_TICK_HOOK		0
 
 //#define configCPU_CLOCK_HZ		( ( unsigned long ) 8000000 )
-#define configCPU_CLOCK_HZ		( ( unsigned long ) 5000000 )
+#define configCPU_CLOCK_HZ		( ( unsigned long ) 500000000 )
+
 // AM3359 runs at 500MHZ on USB Power Mode
 
 #define configTICK_RATE_HZ		( ( portTickType ) 1000 ) 

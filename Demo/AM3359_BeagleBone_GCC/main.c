@@ -240,26 +240,14 @@ static void prvSetupHardware( void )
 
 	/* Initialize GPIOs */
 
-    /*---------------------------------------------------------
-     * BOARD 
-	 * GPIO5: 31,30,29,28,22,21,15,14,13,12
-	 * GPIO6: 23,10,08,02,01 
-	 * (*(REG32(GPIO5_BASE+GPIO_OE))) = ~(PIN31|PIN30|PIN29|PIN28|PIN22|PIN21|PIN15|PIN14|PIN13|PIN12);
-	 * (*(REG32(GPIO6_BASE+GPIO_OE))) = ~(PIN23|PIN10|PIN8|PIN2|PIN1);
-     *
-	 * Switch off the leds 
-	 * (*(REG32(GPIO5_BASE+GPIO_CLEARDATAOUT))) = PIN22|PIN21;
-     *---------------------------------------------------------*/
-
     /* BONE */
-
-    // How exactly to use these ?
-    /* THese WER TAKEN FROM WAYLING */
+    /* Enabling the GPIO1 clocks */
     (*(REG32(PRCM_REG + CM_PER_GPIO1_CLKCTRL))) =0x2;
+
+    /* Controlling the output capability */
     (*(REG32(GPIO1_BASE+GPIO_OE))) = ~(PIN21|PIN22|PIN23|PIN24);  
  
-    /* Switch off the leds */  
-	// (*(REG32(GPIO6_BASE+GPIO_OE))) = ~(PIN23|PIN10|PIN8|PIN2|PIN1);
+    /* Switch off the leds */ 
     (*(REG32(GPIO1_BASE+GPIO_CLEARDATAOUT))) = PIN24|PIN23|PIN22|PIN21; 
 } 
 
@@ -317,14 +305,11 @@ void prvToggleOnBoardLED( void )
 	/* Toggle LED0 */
 	unsigned long ulState;
 	unsigned volatile int * gpio;
-	//ulState = (*(REG32 (GPIO5_BASE + GPIO_DATAIN)));
     ulState = (*(REG32 (GPIO1_BASE + GPIO_DATAIN)));
 
 	if( ulState & mainON_BOARD_LED_BIT )
 	{
-		//gpio = (unsigned int *)(GPIO5_BASE + GPIO_SETDATAOUT);
 		gpio = (unsigned int *)(GPIO1_BASE + GPIO_SETDATAOUT);
-
 		*gpio = mainON_BOARD_LED_BIT;
 	}
 	else
